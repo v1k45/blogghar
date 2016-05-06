@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,17 +9,7 @@
     <title>{% block head_title %}{% endblock %} | blogghar</title>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
-    <style>
-      body {
-        display: flex;
-        min-height: 100vh;
-        flex-direction: column;
-      }
-
-      main {
-        flex: 1 0 auto;
-      }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
     {# block to easily inject any content in head #}
     {% block extra_head %}
     {% endblock %}
