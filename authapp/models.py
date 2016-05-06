@@ -3,13 +3,14 @@ from django.conf import settings
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,
+                                related_name='profile')
     avatar = models.ImageField(blank=True)
     about = models.TextField(blank=True)
     last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.user.get_full_name()
+        return self.user.username
 
     def save(self, *args, **kwargs):
         if self.id and self.avatar:
