@@ -1,12 +1,21 @@
 from django.db import models
 from django.conf import settings
+from django.core.urlresolvers import reverse
 
 
 class UserProfile(models.Model):
+
+    USER_TYPES = (
+        ('b', 'Blogger'),
+        ('r', 'Reader')
+    )
+
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                 related_name='profile')
     avatar = models.ImageField(blank=True)
     about = models.TextField(blank=True)
+    user_type = models.CharField(max_length=1, choices=USER_TYPES, default='b')
+
     last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -18,3 +27,7 @@ class UserProfile(models.Model):
             if current_avatar != self.avatar:
                 current_avatar.delete()
         super(UserProfile, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        target = reverse('profile', args=[self.user.username])
+        return target
