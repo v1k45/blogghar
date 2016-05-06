@@ -7,3 +7,7 @@ body {
 main {
   flex: 1 0 auto;
 }
+
+.profile-content {
+    padding: 20px;
+}
