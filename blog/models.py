@@ -56,8 +56,8 @@ class Post(models.Model):
 
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='posts')
 
-    status = models.BooleanField(choices=STATUS_CHOICES, max_length=1,
-                                 default='d')
+    status = models.CharField(choices=STATUS_CHOICES, max_length=1,
+                              default='d')
 
     objects = PostQueryset.as_manager()
 
