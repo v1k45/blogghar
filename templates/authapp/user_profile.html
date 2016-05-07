@@ -4,7 +4,7 @@
 {% block content %}
 <div class="profile-bg z-depth-1" style="background-image: url('{% static 'images/user-profile-bg.jpg' %}')">
   <div class="row profile-content">
-    <div class="profile-image col s3">
+    <div class="profile-image col s12 l3">
         <img class="circle z-depth-1"
         {% if profile.avatar %}
           src="{{ profile.avatar.url }}"
@@ -13,7 +13,7 @@
         {% endif %}
         title="{{ profile.user.username }}'s avatar" />
     </div>
-    <div class="user-details col s9">
+    <div class="user-details col s12 l9">
       <h2 class="white-text">{{ profile.user.username }}</h2>
       <p class="white-text">Member since: {{ profile.user.date_joined|timesince }}</p>
     </div>
