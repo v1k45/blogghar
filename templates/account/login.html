@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{# for some reasons, the html page breaks all its element when using crispy in some forms #}
+{# to fix this, first make whole html page invisible, then make it visible after DOM is loaded properly #}
+
+{% block extra_head %}
+  <style type="text/css">
+      html { visibility: hidden; }
+      .help-block.right { float: none !important; }
+  </style>
+{% endblock %}
+
+
+{% block head_title %}SignIn{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col m6 offset-m3 clearfix shadow-box-off">
+                    <form action="{% url 'account_login' %}" class="clearfix" method="post" id="loginForm">
+                        <h5 class="login-hl">Sign In</h5>
+                        {% crispy form %}
+                        {% if redirect_field_value %}
+                            <input type="hidden" name="{{ redirect_field_name }}"
+                                   value="{{ redirect_field_value }}"/>
+                        {% endif %}
+                        <br style="clear: both;" />
+                        <hr style="clear: both; margin: 20px 0;"/>
+                        <a class='right input-field' href='/accounts/password/reset/'>Forgot Password?</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+  <script type="text/javascript">
+      $(document).ready(function(){
+          $('html').attr('style','visibility: visible');
+      });
+  </script>
+{% endblock %}
