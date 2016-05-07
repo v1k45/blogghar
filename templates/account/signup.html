@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}Create a new account{% endblock %}
+
+{% block extra_head %}
+    <style type="text/css">
+        html { visibility: hidden; }
+        .help-block.right { float: none !important; }
+        .select-wrapper input.select-dropdown, .select-wrapper span.caret {
+          /* to make sure select input doesnt feel unsatisfying */
+          color: #9e9e9e !important;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col m7 shadow-box-off offset-m3">
+                    <form action="{% url 'account_signup' %}" method="post" class="form-horizontal clearfix">
+                        <h5 class="login-hl">Create a new account</h5>
+                        {% crispy form %}
+                        {% if redirect_field_value %}
+                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('html').attr('style','visibility: visible');
+            // since materializecss requires initialization for select tags:
+            $('select').material_select();
+        });
+    </script>
+{% endblock %}
