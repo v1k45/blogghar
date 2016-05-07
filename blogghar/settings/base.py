@@ -154,6 +154,7 @@ ACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_FORMS = {
     'login': 'authapp.forms.CustomLoginForm',
     'change_password': 'authapp.forms.CustomChangePwdForm',
+    'add_email': 'authapp.forms.CustomAddEmailForm',
 }
 ACCOUNT_SIGNUP_FORM_CLASS = 'authapp.signupform.SignupForm'
 ACCOUNT_ADAPTER = 'authapp.adapter.CustomAccountAdapter'
