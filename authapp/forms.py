@@ -25,3 +25,23 @@ class CustomLoginForm(allauth_forms.LoginForm):
                 'Sign In', type='submit', style='margin-top: 10px',
                 css_class="waves-effect btn-large blue waves-light btn right"),
         )
+
+
+class CustomChangePwdForm(allauth_forms.ChangePasswordForm):
+    def __init__(self, *args, **kwargs):
+        super(CustomChangePwdForm, self).__init__(*args, **kwargs)
+
+        self.helper = FormHelper(self)
+        self.helper.form_tag = False
+        self.helper.form_show_labels = True
+
+        for field in self.fields:
+            self.fields[field].widget.attrs['placeholder'] = None
+            del self.fields[field].widget.attrs['placeholder']
+
+        self.helper.layout = Layout(
+            'oldpassword', 'password1', 'password2',
+            StrictButton(
+                'Change Password', type='submit', name='action',
+                css_class='btn blue waves-effect waves-light btn-large')
+        )
