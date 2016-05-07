@@ -40,8 +40,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Enabling django sites framework for allauth.
+    'django.contrib.sites',
+
     # third party apps
     'crispy_forms',
+
+    # for handling authentication related tasks
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 
     # Local apps
     'authapp',
@@ -129,3 +137,16 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = ('bootstrap', 'uni_form',
 
 # template pack to use
 CRISPY_TEMPLATE_PACK = 'materialize_form'
+
+# Allauth and other authentication realted settings
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+# Site ID specification for sites framework
+SITE_ID = 1
