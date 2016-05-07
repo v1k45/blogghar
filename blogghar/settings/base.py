@@ -154,6 +154,8 @@ ACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_FORMS = {
     'login': 'authapp.forms.CustomLoginForm',
 }
+ACCOUNT_SIGNUP_FORM_CLASS = 'authapp.signupform.SignupForm'
+ACCOUNT_ADAPTER = 'authapp.adapter.CustomAccountAdapter'
 
 # Site ID specification for sites framework
 SITE_ID = 1
