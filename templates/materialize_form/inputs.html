@@ -1,0 +1,9 @@
+{% if inputs %}
+    <div{% if label_class %} class="{{ label_class }}"{% endif %}>
+        <div class="input-field {{ field_class }}">
+            {% for input in inputs %}
+                {% include "materialize_form/layout/baseinput.html" %}
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}

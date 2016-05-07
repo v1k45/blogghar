@@ -121,3 +121,11 @@ STATICFILES_DIRS = (os.path.join(STATIC_ROOT, 'sitefiles'),)
 # Media files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+# Crispy form related settings
+# allowed packs
+CRISPY_ALLOWED_TEMPLATE_PACKS = ('bootstrap', 'uni_form',
+                                 'bootstrap3', 'materialize_form')
+
+# template pack to use
+CRISPY_TEMPLATE_PACK = 'materialize_form'
