@@ -45,3 +45,23 @@ class CustomChangePwdForm(allauth_forms.ChangePasswordForm):
                 'Change Password', type='submit', name='action',
                 css_class='btn blue waves-effect waves-light btn-large')
         )
+
+
+class CustomAddEmailForm(allauth_forms.AddEmailForm):
+    def __init__(self, *args, **kwargs):
+        super(CustomAddEmailForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_tag = False
+        self.helper.form_show_labels = True
+
+        self.fields['email'].widget.attrs['placeholder'] = None
+        self.fields['email'].label = 'Email Address'
+
+        del self.fields['email'].widget.attrs['placeholder']
+
+        self.helper.layout = Layout(
+            'email',
+            StrictButton(
+                'Add Email', name='action_add', type='submit',
+                css_class='btn blue btn-large white-text waves-effect waves-light')  # noqa
+        )
