@@ -148,5 +148,12 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
+ACCOUNT_AUTHENTICATION_METHOD = "username"
+ACCOUNT_EMAIL_VERIFICATION = "none"
+
+ACCOUNT_FORMS = {
+    'login': 'authapp.forms.CustomLoginForm',
+}
+
 # Site ID specification for sites framework
 SITE_ID = 1
