@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     # Local apps
     'authapp',
+    'blog',
 ]
 
 MIDDLEWARE_CLASSES = [
