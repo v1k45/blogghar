@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block head_title %}
+  {% if not has_blog %}
+    No blog found
+  {% else %}
+    @{{ requested_user.username }}'s Blog
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% if not has_blog %}
+    {% if user.id == requested_user.id %}
+      <div id="no-blog-card" class="center flow-text">
+        <div class="card">
+          {% if requested_user.profile.is_blogger %}
+            <div class="card-content">
+              <span class="card-title">You haven't created a blog.</span>
+              <p class="grey-text">Blogs are a nice way to show off your writing skills and documenting your life.
+                <br/>You should give a try to it!</p>
+            </div>
+            <div class="card-action">
+              <a href="#">Start blogging!</a>
+            </div>
+          {% else %}
+            <div class="card-content">
+              <span class="card-title">You are not a blogger</span>
+              <p class="grey-text">You registered to blogghar as a reader, you can't have a blog.</p>
+            </div>
+            <div class="card-action">
+              <a href="#">Become a blogger.</a>
+            </div>
+          {% endif %}
+          </div>
+        </div>
+    {% else %}
+      <div id="no-blog-card" class="center flow-text">
+        <div class="card">
+            <div class="card-content">
+              <span class="card-title">No blog found.</span>
+              <p class="grey-text">This user doesn't seem to have a blog.</p>
+            </div>
+          </div>
+        </div>
+    {% endif %}
+  {% else %}
+    {% if not requested_user.blog %}
+      Content to be added.
+    {% endif %}
+  {% endif %}
+{% endblock %}
