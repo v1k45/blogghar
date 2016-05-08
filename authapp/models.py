@@ -31,3 +31,9 @@ class UserProfile(models.Model):
     def get_absolute_url(self):
         target = reverse('profile', args=[self.user.username])
         return target
+
+    def is_blogger(self):
+        return self.user_type == 'b'
+
+    def is_reader(self):
+        return self.user_type == 'r'
