@@ -158,6 +158,7 @@ ACCOUNT_FORMS = {
 }
 ACCOUNT_SIGNUP_FORM_CLASS = 'authapp.signupform.SignupForm'
 ACCOUNT_ADAPTER = 'authapp.adapter.CustomAccountAdapter'
+ACCOUNT_LOGOUT_ON_GET = True
 
 # Site ID specification for sites framework
 SITE_ID = 1
