@@ -41,7 +41,7 @@ class Post(models.Model):
         ('p', 'Published'),
     )
 
-    blog = models.ForeignKey(Blog, related_name='blogs')
+    blog = models.ForeignKey(Blog, related_name='posts')
 
     title = models.CharField(max_length=150)
     summary = models.CharField(max_length=255, blank=True)
