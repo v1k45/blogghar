@@ -65,3 +65,22 @@ class CustomAddEmailForm(allauth_forms.AddEmailForm):
                 'Add Email', name='action_add', type='submit',
                 css_class='btn blue btn-large white-text waves-effect waves-light')  # noqa
         )
+
+
+class CustomResetPwdForm(allauth_forms.ResetPasswordForm):
+    def __init__(self, *args, **kwargs):
+        super(CustomResetPwdForm, self).__init__(*args, **kwargs)
+
+        self.helper = FormHelper(self)
+        self.helper.form_tag = False
+        self.helper.form_show_labels = True
+
+        del self.fields['email'].widget.attrs['placeholder']
+        self.fields['email'].label = "Email Address"
+
+        self.helper.layout = Layout(
+            'email',
+            StrictButton(
+                'Reset My Password', type='submit',
+                css_class='btn blue btn-large waves-effect waves-light')
+        )
