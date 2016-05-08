@@ -84,3 +84,22 @@ class CustomResetPwdForm(allauth_forms.ResetPasswordForm):
                 'Reset My Password', type='submit',
                 css_class='btn blue btn-large waves-effect waves-light')
         )
+
+
+class CustomResetPasswordKeyForm(allauth_forms.ResetPasswordKeyForm):
+    def __init__(self, *args, **kwargs):
+        super(CustomResetPasswordKeyForm, self).__init__(*args, **kwargs)
+
+        self.helper = FormHelper(self)
+        self.helper.form_tag = False
+        self.helper.form_show_labels = True
+        for field in self.fields:
+            self.fields[field].widget.attrs['placeholder'] = None
+            del self.fields[field].widget.attrs['placeholder']
+
+        self.helper.layout = Layout(
+            'password1', 'password2',
+            StrictButton(
+                'Change Password', type='submit',
+                css_class='btn blue btn-large waves-effect waves-light')
+        )
