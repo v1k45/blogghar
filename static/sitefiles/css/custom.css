@@ -8,12 +8,37 @@ main {
   flex: 1 0 auto;
 }
 
-.profile-content {
-    padding: 20px;
-}
-
 .email-options {
 	margin: 10px 0;
 	padding-top: 10px;
 	border-top: 1px solid #ddd;
+}
+
+/*----------------------------------------
+    Profile Page
+------------------------------------------*/
+
+#profile-page-header .card-image {
+    height: 150px;
+    cursor: default;
+}
+#profile-page-header .card-profile-image {
+    width: 110px;
+    position: absolute;
+    top: 100px;
+    z-index: 1;
+    left: 40px;
+    cursor: pointer;
+    margin: 0;
+}
+#profile-page-header .card-content{
+    margin-top: -15px;
+    padding: 0 0 1px 0;
+}
+#profile-page-header .card-content .card-title{
+    margin-bottom: 0px;
+}
+
+#profile-page-about {
+    padding: 50px;
 }
