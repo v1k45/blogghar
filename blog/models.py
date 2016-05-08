@@ -13,8 +13,7 @@ class Blog(models.Model):
     last_modified = models.DateTimeField(auto_now=True)
 
     # one to one because an author can only have one blog (as of now)
-    author = models.OneToOneField(settings.AUTH_USER_MODEL,
-                                  related_name='blogs')
+    author = models.OneToOneField(settings.AUTH_USER_MODEL)
 
     is_public = models.BooleanField(default=True)
     is_deleted = models.BooleanField(default=False)
