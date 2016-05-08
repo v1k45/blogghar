@@ -155,6 +155,7 @@ ACCOUNT_FORMS = {
     'login': 'authapp.forms.CustomLoginForm',
     'change_password': 'authapp.forms.CustomChangePwdForm',
     'add_email': 'authapp.forms.CustomAddEmailForm',
+    'reset_password': 'authapp.forms.CustomResetPwdForm',
 }
 ACCOUNT_SIGNUP_FORM_CLASS = 'authapp.signupform.SignupForm'
 ACCOUNT_ADAPTER = 'authapp.adapter.CustomAccountAdapter'
