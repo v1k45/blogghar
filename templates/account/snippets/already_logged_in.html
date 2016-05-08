@@ -1,0 +1,6 @@
+{% load account %}
+
+{% user_display user as user_display %}
+<div class="error-pan z-depth-1 white-text">
+    <p><strong>Note:</strong> you are already logged in as {{ user_display }}.</p>
+</div>
