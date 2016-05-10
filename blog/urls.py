@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^blog-home/update/$', views.blog_update, name='blog_update'),
     url(r'^blog-home/write/$', views.post_create, name='post_create'),
     url(r'^blog-home/update/(?P<slug>[\w-]+)/$', views.post_update, name='post_update'),  # noqa
+    url(r'^blog-home/tags/$', views.tag_autocomplete, name='tag_autocomplete'),
 ]
