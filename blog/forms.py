@@ -3,8 +3,9 @@ from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit
 from crispy_forms.bootstrap import StrictButton
+from dal import autocomplete
 
-from .models import Blog, Post
+from .models import Blog, Post, Tag
 
 
 class BlogForm(forms.ModelForm):
@@ -38,15 +39,27 @@ class BlogForm(forms.ModelForm):
         return save_data
 
 
+class TagCreateField(autocomplete.CreateModelMultipleField):
+    def create_value(self, value):
+        return Tag.objects.create(name=value).pk
+
+
 class PostForm(forms.ModelForm):
+    tags = TagCreateField(
+        queryset=Tag.objects.all(),
+        widget=autocomplete.ModelSelect2Multiple(url='tag_autocomplete'),
+        required=False,
+        )
 
     class Meta(object):
         model = Post
-        fields = ['title', 'slug', 'content', 'summary']
+        fields = ['title', 'slug', 'content', 'summary', 'tags']
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
         super(PostForm, self).__init__(*args, **kwargs)
+        self.fields['slug'].required = False
+        self.fields['slug'].label = 'Slug (leave blank to auto-generate)'
         # making forms crispy
         self.helper = FormHelper(self)
         self.helper.include_media = False
@@ -68,6 +81,7 @@ class PostForm(forms.ModelForm):
     def save(self, commit=True):
         save_data = super(PostForm, self).save(commit=False)
         save_data.author = self.user
+        save_data.blog = self.user.blog
         save_data.status = self.cleaned_data['status']
         save_data.save()
         return save_data
