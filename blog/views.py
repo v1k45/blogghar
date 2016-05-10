@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DetailView
 from django.views.generic.detail import SingleObjectMixin
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -42,6 +42,19 @@ class BlogDetail(SingleObjectMixin, ListView):
 
 
 blog_detail = BlogDetail.as_view()
+
+
+class PostDetailView(DetailView):
+    model = Post
+    template_name = 'blog/post_detail.html'
+
+    def get_queryset(self):
+        queryset = Post.objects.select_related(
+            'author', 'blog', 'author__profile').filter(
+                author__username=self.kwargs['username'])
+        return queryset
+
+post_detail = PostDetailView.as_view()
 
 
 class BlogModelMixin(object):
