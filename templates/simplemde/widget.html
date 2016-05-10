@@ -1,1 +1,28 @@
 {{ widget }}
+<!-- Image upload modal -->
+<div id="imageUploadModal" class="modal">
+  <div class="modal-content">
+    <h4>Insert an Image</h4>
+    <p>Upload an image from your disk</p>
+    <div class="file-field input-field">
+      <div class="btn green">
+        <span>Browse: </span>
+        <input type="file" id="browseImage" accept="image/*">
+      </div>
+      <div class="file-path-wrapper">
+        <input class="file-path validate" id="filePathInput" type="text" placeholder="Select and upload image from your disk">
+        <a class="waves-effect btn blue center" id='imageUpload'>Insert an image</a>
+      </div>
+      <br/>
+    </div>
+    <p>Paste a image link below:</p>
+    <div class="input-field">
+      <label for="imageURL" class="control-label">Image Link:</label>
+      <input class="form-control" type="text" id="imageURL" placeholder="Insert image url here.. ex: http://i.imgur.com/dNAZ1L9.jpg">
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Close</a>
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" id='insertImageButton'>Insert an image</a>
+  </div>
+</div>
