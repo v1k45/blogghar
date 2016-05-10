@@ -32,6 +32,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # autocomplete-light app. added before admin to override jquery
+    # as suggessted by docs.
+    'dal',
+    'dal_select2',
     # core django apps
     'django.contrib.admin',
     'django.contrib.auth',
