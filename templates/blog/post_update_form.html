@@ -1,13 +1,25 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% load crispy_forms_tags %}
 
 {% block head_title %}Update: {{ post.title }}{% endblock %}
 
 {% block content %}
   <div class="container">
-    <h3 class="center">Update: {{ post.title }}</h3>
+    <h3 class="center"><b>Update</b>: {{ post.title }}</h3>
       <div class="card-panel z-depth-0">
         {% crispy form %}
       </div>
   </div>
+{% endblock %}
+
+{% block extra_scripts %}
+    {{ form.media }}
+    <link rel="stylesheet" href="{% static 'css/select2.materializecss.css' %}" charset="utf-8">
+    <script type="text/javascript">
+      $tag_label = $("label[for='id_tags']");
+      $('#div_id_tags').hover(function () {
+        $tag_label.toggleClass('hidden');
+      })
+    </script>
 {% endblock %}
