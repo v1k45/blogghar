@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block head_title %}Your posts{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h3>Your blog posts</h3>
+    {% for post in posts %}
+    <div class="card">
+      <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4">{{ post.title }}</span>
+      <p>{{ post.summary }}</p>
+      <p><i class="material-icons">edit</i> {{ post.created }}</p>
+      <p><i class="material-icons">bookmark</i> {% for tag in post.tags.all %}
+        {{ tag.name }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}</p>
+      {% if post.is_published %}
+        <p class="green white-text left">PUBLISHED</p>
+      {% else %}
+        <p class="orange white-text left">DRAFT</p>
+      {% endif %}
+      </div>
+      <div class="card-action">
+        <a href="{% url 'post_update' post.slug %}">Edit this post</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+{% endblock %}
