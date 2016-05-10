@@ -51,3 +51,27 @@ def create_or_edit_blog(view_func):
             return redirect('user_blog', username=user.username)
 
     return wraps(view_func)(_create_or_edit_blog_check)
+
+
+def blogger_required(view_func):
+    """
+    Only lets bloggers to access the supplied view and redirects readers.
+    """
+    def _check_blogger_or_reader(request, *args, **kwargs):
+
+        UserModel = get_user_model()
+        user_id = request.user.id
+        user = UserModel.objects.select_related().get(pk=user_id)
+
+        # update user instance on request with related objects to save queries.
+        request.user = user
+
+        if user.profile.is_blogger():
+            try:
+                if request.user.blog:
+                    return view_func(request, *args, **kwargs)
+            except Blog.DoesNotExist:
+                return redirect('blog_create')
+        else:
+            return redirect('user_blog', username=request.user.username)
+    return wraps(view_func)(_check_blogger_or_reader)
