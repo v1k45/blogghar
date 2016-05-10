@@ -61,14 +61,15 @@ def blogger_required(view_func):
 
         UserModel = get_user_model()
         user_id = request.user.id
-        user = UserModel.objects.select_related().get(pk=user_id)
+        user = UserModel.objects.select_related(
+            'profile', 'blog').prefetch_related().get(pk=user_id)
 
         # update user instance on request with related objects to save queries.
         request.user = user
 
         if user.profile.is_blogger():
             try:
-                if request.user.blog:
+                if user.blog:
                     return view_func(request, *args, **kwargs)
             except Blog.DoesNotExist:
                 return redirect('blog_create')
