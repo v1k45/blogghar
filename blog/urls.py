@@ -4,6 +4,8 @@ from . import views
 
 urlpatterns = [
     url(r'^@(?P<username>[\w-]+)/blog/$', views.blog_detail, name='user_blog'),
-    url(r'^blog-home/start/', views.blog_create, name='blog_create'),
-    url(r'^blog-home/update/', views.blog_update, name='blog_update'),
+    url(r'^blog-home/start/$', views.blog_create, name='blog_create'),
+    url(r'^blog-home/update/$', views.blog_update, name='blog_update'),
+    url(r'^blog-home/write/$', views.post_create, name='post_create'),
+    url(r'^blog-home/update/(?P<slug>[\w-]+)/$', views.post_update, name='post_update'),  # noqa
 ]

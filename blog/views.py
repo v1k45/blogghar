@@ -4,9 +4,9 @@ from django.views.generic.detail import SingleObjectMixin
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
-from .models import Blog
-from .forms import BlogForm
-from .decorators import create_or_edit_blog
+from .models import Blog, Post
+from .forms import BlogForm, PostForm
+from .decorators import create_or_edit_blog, blogger_required
 
 
 class BlogDetail(SingleObjectMixin, ListView):
@@ -70,3 +70,34 @@ class BlogUpdateView(BlogModelMixin, UpdateView):
         return self.request.user.blog
 
 blog_update = BlogUpdateView.as_view()
+
+
+class PostModelMixin(object):
+    model = Post
+    form_class = PostForm
+
+    @method_decorator([login_required, blogger_required])
+    def dispatch(self, request, *args, **kwargs):
+        return super(PostModelMixin, self).dispatch(request, *args, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super(PostModelMixin, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+
+class PostCreateView(PostModelMixin, CreateView):
+    template_name_suffix = '_create_form'
+    success_url = '/accounts/profile/'
+
+post_create = PostCreateView.as_view()
+
+
+class PostUpdateView(PostModelMixin, UpdateView):
+    template_name_suffix = '_update_form'
+    success_url = '/accounts/profile/'
+
+    def get_queryset(self):
+        return self.request.user.blog.posts.all()
+
+post_update = PostUpdateView.as_view()
