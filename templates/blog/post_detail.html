@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block head_title %}{{ post.title }} -- {{ post.blog.title }}{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="card">
+      <div class="card-image">
+        <img src="https://getmdl.io/templates/blog/images/road_big.jpg">
+        <span class="card-title">{{ post.title }}</span>
+      </div>
+      <div class="card-content">
+        <span class="left">@{{ post.author }}</span>
+        <span class="right">{{ post.created }}</span>
+      </div>
+      <div class="card-content">
+        <div class="post-content flow-text">
+          {{ post.content }}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
