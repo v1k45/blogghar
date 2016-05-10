@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     # Local apps
     'authapp',
     'blog',
+    'simplemde',
 ]
 
 MIDDLEWARE_CLASSES = [
