@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}Create a blogpost{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h3 class="center">Create a blogpost</h3>
+      <div class="card-panel z-depth-0">
+        {% crispy form %}
+      </div>
+  </div>
+{% endblock %}
+
+{% block extra_scripts %}
+    {{ form.media }}
+{% endblock %}
