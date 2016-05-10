@@ -78,6 +78,7 @@ blog_update = BlogUpdateView.as_view()
 class PostModelMixin(object):
     model = Post
     form_class = PostForm
+    success_url = '/blog-home/posts/'
 
     @method_decorator([login_required, blogger_required])
     def dispatch(self, request, *args, **kwargs):
@@ -96,17 +97,15 @@ class PostModelMixin(object):
 
 class PostCreateView(PostModelMixin, CreateView):
     template_name_suffix = '_create_form'
-    success_url = '/accounts/profile/'
 
 post_create = PostCreateView.as_view()
 
 
 class PostUpdateView(PostModelMixin, UpdateView):
     template_name_suffix = '_update_form'
-    success_url = '/accounts/profile/'
 
     def get_queryset(self):
-        return self.request.user.blog.posts.all()
+        return self.request.user.posts.all()
 
 post_update = PostUpdateView.as_view()
 
@@ -125,3 +124,20 @@ class TagAutoComplete(autocomplete.Select2QuerySetView):
         return super(TagAutoComplete, self).dispatch(request, *args, **kwargs)
 
 tag_autocomplete = TagAutoComplete.as_view()
+
+
+class UserPostsList(ListView):
+    model = Post
+    template_name = 'blog/user_posts.html'
+    context_object_name = 'posts'
+
+    @method_decorator([login_required, blogger_required])
+    def dispatch(self, request, *args, **kwargs):
+        return super(UserPostsList, self).dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        queryset = Post.objects.select_related(
+            'author', 'blog').prefetch_related('tags').filter(author=self.request.user)  # noqa
+        return queryset
+
+user_posts = UserPostsList.as_view()
