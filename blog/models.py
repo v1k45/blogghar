@@ -63,3 +63,11 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=30)
+    slug = AutoSlugField(populate_from='name', editable=True, unique=True)
+
+    def __str__(self):
+        return self.name
