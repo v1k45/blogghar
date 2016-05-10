@@ -3,8 +3,11 @@ from django.views.generic import ListView, CreateView, UpdateView
 from django.views.generic.detail import SingleObjectMixin
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
 
-from .models import Blog, Post
+from dal import autocomplete
+
+from .models import Blog, Post, Tag
 from .forms import BlogForm, PostForm
 from .decorators import create_or_edit_blog, blogger_required
 
@@ -85,6 +88,11 @@ class PostModelMixin(object):
         kwargs['user'] = self.request.user
         return kwargs
 
+    def form_valid(self, form):
+        form.save()
+        form.save_m2m()
+        return redirect(self.success_url)
+
 
 class PostCreateView(PostModelMixin, CreateView):
     template_name_suffix = '_create_form'
@@ -101,3 +109,19 @@ class PostUpdateView(PostModelMixin, UpdateView):
         return self.request.user.blog.posts.all()
 
 post_update = PostUpdateView.as_view()
+
+
+class TagAutoComplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs = Tag.objects.all()
+
+        if self.q:
+            qs = qs.filter(name__istartswith=self.q)
+
+        return qs
+
+    @method_decorator([login_required, blogger_required])
+    def dispatch(self, request, *args, **kwargs):
+        return super(TagAutoComplete, self).dispatch(request, *args, **kwargs)
+
+tag_autocomplete = TagAutoComplete.as_view()
