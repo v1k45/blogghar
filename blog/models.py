@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from autoslug import AutoSlugField
+from simplemde.fields import SimpleMdeField
 
 
 class Blog(models.Model):
@@ -45,7 +46,7 @@ class Post(models.Model):
 
     title = models.CharField(max_length=150)
     summary = models.CharField(max_length=255, blank=True)
-    content = models.TextField()
+    content = SimpleMdeField()
 
     slug = AutoSlugField(populate_from='title', unique_with=['blog'],
                          editable=True)
