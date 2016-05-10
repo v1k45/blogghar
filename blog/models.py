@@ -51,6 +51,8 @@ class Post(models.Model):
     slug = AutoSlugField(populate_from='title', unique_with=['blog'],
                          editable=True)
 
+    tags = models.ManyToManyField('Tag', related_name='posts', blank=True)
+
     created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
 
