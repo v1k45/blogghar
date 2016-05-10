@@ -1,10 +1,10 @@
 from django import forms
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout
+from crispy_forms.layout import Layout, Submit
 from crispy_forms.bootstrap import StrictButton
 
-from .models import Blog
+from .models import Blog, Post
 
 
 class BlogForm(forms.ModelForm):
@@ -34,5 +34,40 @@ class BlogForm(forms.ModelForm):
     def save(self, commit=True):
         save_data = super(BlogForm, self).save(commit=False)
         save_data.author = self.user
+        save_data.save()
+        return save_data
+
+
+class PostForm(forms.ModelForm):
+
+    class Meta(object):
+        model = Post
+        fields = ['title', 'slug', 'content', 'summary']
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        super(PostForm, self).__init__(*args, **kwargs)
+        # making forms crispy
+        self.helper = FormHelper(self)
+        self.helper.include_media = False
+        self.helper.add_input(Submit(
+            'draft', 'draft',
+            css_class='btn orange btn-large right waves-effect waves-light'))
+        self.helper.add_input(Submit(
+            'publish', 'publish',
+            css_class='btn blue btn-large right waves-effect waves-light'))
+
+    def clean(self):
+        cleaned_data = super(PostForm, self).clean()
+        if 'publish' in self.data:
+            cleaned_data['status'] = 'p'
+        else:
+            cleaned_data['status'] = 'd'
+        return cleaned_data
+
+    def save(self, commit=True):
+        save_data = super(PostForm, self).save(commit=False)
+        save_data.author = self.user
+        save_data.status = self.cleaned_data['status']
         save_data.save()
         return save_data
