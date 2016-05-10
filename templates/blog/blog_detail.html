@@ -4,7 +4,7 @@
   {% if not has_blog %}
     No blog found
   {% else %}
-    @{{ requested_user.username }}'s Blog
+    {{ requested_user.blog.title }} -- @{{ requested_user.username }}'s Blog
   {% endif %}
 {% endblock %}
 
@@ -44,8 +44,25 @@
         </div>
     {% endif %}
   {% else %}
-    {% if not requested_user.blog %}
-      Content to be added.
-    {% endif %}
-  {% endif %}
+  <h3>{{ requested_user.blog.title }}</h3>
+  <p class="grey-text">{{ requested_user.blog.tag_line }}</p>
+  <div class="row">
+    <div class="col s8">
+      {% for post in requested_user.blog.posts.all %}
+        <div class="card medium">
+          <div class="card-image">
+            <img src="https://getmdl.io/templates/blog/images/road_big.jpg">
+            <span class="card-title">{{ post.title }}</span>
+          </div>
+          <div class="card-content">
+            <p>{{ post.summary }}</p>
+          </div>
+          <div class="card-action">
+          <a href="#" class="right">Read more</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
 {% endblock %}
