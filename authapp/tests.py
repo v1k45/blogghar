@@ -14,7 +14,7 @@ class UserProfileViewTestCase(TestCase):
         profile.save()
 
     def test_view_profile_is_accessible(self):
-        target = reverse('profile', args=[self.user.username])
+        target = reverse('authapp:profile', args=[self.user.username])
         response = self.client.get(target)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'authapp/user_profile.html')

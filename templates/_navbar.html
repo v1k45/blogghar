@@ -7,14 +7,14 @@
         <li><a href="/">Home</a></li>
         {% if user.is_authenticated %}
           <li>
-            <a href="{% url 'user_profile' %}" class="dropdown-button"
+            <a href="{% url 'authapp:user_profile' %}" class="dropdown-button"
               data-activates="user-dropdown" data-beloworigin="true" data-constrainwidth="false">
               hey, @{{ user.username }} <i class="material-icons right">arrow_drop_down</i>
             </a>
               <!-- user dropdown -->
               <ul id="user-dropdown" class="dropdown-content">
                 <li>
-                  <a href="{% url 'user_profile' %}">View profile</a>
+                  <a href="{% url 'authapp:user_profile' %}">View profile</a>
                 </li>
                 <li>
                   <a href="{% url 'account_change_password' %}">Change pasword</a>

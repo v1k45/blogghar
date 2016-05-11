@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load blog_tags %}
 
 {% block head_title %}Home{% endblock %}
 
@@ -23,7 +22,7 @@
           <div class="card">
             <div class="card-image">
               <img src="https://getmdl.io/templates/blog/images/road_big.jpg">
-              <a href="{% url 'post_detail' post.author.username post.slug %}">
+              <a href="{% url 'blog:post_detail' post.author.username post.slug %}">
                 <span title="{{ post.title }}" class="card-title truncate" style="width: 100%; background: rgba(0,0,0,.3);">
                   {{ post.title }}
                 </span>

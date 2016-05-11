@@ -19,7 +19,7 @@
         </a>
       </div>
       <div class="col s1 center-align">
-        <a href="{% url 'user_comments' profile.user.username %}" title="Comments">
+        <a href="{% url 'authapp:user_comments' profile.user.username %}" title="Comments">
           <h4 class="card-title grey-text text-darken-4">{{ profile.user.comments.count }}</h4>
           <p class="medium-small grey-text"><i class="material-icons">comment</i></p>
         </a>
@@ -31,7 +31,7 @@
         </a>
       </div>
       <div class="col s1 center-align">
-        <a href="{% url 'user_blog' profile.user.username %}" title="User type">
+        <a href="{% url 'blog:user_blog' profile.user.username %}" title="User type">
           <h4 class="card-title grey-text text-darken-4">
             {% if profile.user.is_staff %}
               Staff
@@ -55,7 +55,7 @@
       {% if request.user.id == profile.user.id %}
         <div class="col s1 right-align" style="margin-top:-5px">
           <a class="btn-floating waves-effect waves-light darken-1 right"
-              data-tooltip="Edit profile" href="{% url 'user_profile_update' %}">
+              data-tooltip="Edit profile" href="{% url 'authapp:user_profile_update' %}">
               <i class="material-icons">mode_edit</i>
           </a>
         </div>

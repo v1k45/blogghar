@@ -26,7 +26,7 @@ class UserProfileView(DetailView):
 
 @login_required
 def profile_redirector(request):
-    return redirect('profile', username=request.user.username)
+    return redirect('authapp:profile', username=request.user.username)
 
 
 class UserComments(SingleObjectMixin, ListView):
@@ -94,7 +94,7 @@ class UserProfileUpdateView(UpdateView):
                 data.avatar = request.FILES['avatar']
                 data.avatar.name = '{0}_p.jpg'.format(str(uuid.uuid4()))
             data.save()
-            return redirect('user_profile')
+            return redirect('authapp:user_profile')
         else:
             return self.render_to_response(
                 self.get_context_data(form=form, form2=form2)

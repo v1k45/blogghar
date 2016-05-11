@@ -27,7 +27,7 @@ def create_or_edit_blog(view_func):
             if resolved_name == url_name:
                 return view_func(request, *args, **kwargs)
             else:
-                return redirect(url_name)
+                return redirect('blog:' + url_name)
 
         UserModel = get_user_model()
         user_id = request.user.id
@@ -48,7 +48,7 @@ def create_or_edit_blog(view_func):
                 # user should only be able to access blog_create view.
                 return _response_decider('blog_create')
         else:
-            return redirect('user_blog', username=user.username)
+            return redirect('blog:user_blog', username=user.username)
 
     return wraps(view_func)(_create_or_edit_blog_check)
 
@@ -72,7 +72,7 @@ def blogger_required(view_func):
                 if user.blog:
                     return view_func(request, *args, **kwargs)
             except Blog.DoesNotExist:
-                return redirect('blog_create')
+                return redirect('blog:blog_create')
         else:
-            return redirect('user_blog', username=request.user.username)
+            return redirect('blog:user_blog', username=request.user.username)
     return wraps(view_func)(_check_blogger_or_reader)

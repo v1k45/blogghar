@@ -19,13 +19,14 @@
           <div class="card">
             <div class="card-image">
               <img src="https://getmdl.io/templates/blog/images/road_big.jpg">
-              <a href="{% url 'post_detail' user.username post.slug %}"><span title="{{ post.title }}" class="card-title truncate" style="width: 100%; background: rgba(0,0,0,.3);">{{ post.title }}</span></a>
+              <a href="{% url 'blog:post_detail' user.username post.slug %}">
+                <span title="{{ post.title }}" class="card-title truncate" style="width: 100%; background: rgba(0,0,0,.3);">{{ post.title }}</span></a>
             </div>
             <div class="card-content">
               <p>{{ post.summary }}</p>
             </div>
             <div class="card-action">
-              <a href="{% url 'post_update' post.slug %}">Edit</a>
+              <a href="{% url 'blog:post_update' post.slug %}">Edit</a>
             </div>
           </div>
         </div>

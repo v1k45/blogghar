@@ -20,7 +20,7 @@
                 <br/>You should give a try to it!</p>
             </div>
             <div class="card-action">
-              <a href="{% url 'blog_create' %}">Start blogging!</a>
+              <a href="{% url 'blog:blog_create' %}">Start blogging!</a>
             </div>
           {% else %}
             <div class="card-content">
@@ -65,7 +65,7 @@
           <div class="card">
             <div class="card-image">
               <img src="https://getmdl.io/templates/blog/images/road_big.jpg">
-              <a href="{% url 'post_detail' requested_user.username post.slug %}">
+              <a href="{% url 'blog:post_detail' requested_user.username post.slug %}">
                 <span title="{{ post.title }}" class="card-title truncate" style="width: 100%; background: rgba(0,0,0,.3);">
                   {{ post.title }}
                 </span>

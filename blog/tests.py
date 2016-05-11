@@ -64,7 +64,7 @@ class BlogDetailViewTestCase(TestCase):
         annotate_dict({'user': 'user_without_blog', 'has_blog': False}, 'user'),
         annotate_dict({'user': 'reader_without_blog', 'has_blog': False}, 'user'))
     def test_blog_detail_view_is_accessible(self, user, has_blog):
-        target = reverse('user_blog', args=[user])
+        target = reverse('blog:user_blog', args=[user])
         response = self.client.get(target)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'blog/blog_detail.html')
@@ -95,7 +95,7 @@ class PostDetailViewTestCase(TestCase):
                          blog=self.user_with_blog.blog)
         blog_post.save()
 
-        target = reverse('post_detail',
+        target = reverse('blog:post_detail',
                          args=[self.user_with_blog.username, blog_post.slug])
         response = self.client.get(target)
         self.assertEqual(response.status_code, 200)
@@ -125,7 +125,7 @@ class TagggedPostsListViewTestCase(TestCase):
 
         self.assertTrue(Post.objects.filter(tags__slug=tag.slug).exists())
 
-        target = reverse('tagged_posts_list', args=[tag.slug])
+        target = reverse('blog:tagged_posts_list', args=[tag.slug])
         response = self.client.get(target)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'blog/tagged_posts_list.html')
@@ -147,7 +147,7 @@ class BlogCreateViewTestCase(TestCase):
     def test_blog_create_is_accessible_to(self, username, password):
         self.assertTrue(
             self.client.login(username=username, password=password))
-        target = reverse('blog_create')
+        target = reverse('blog:blog_create')
         response = self.client.get(target)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'blog/blog_create_form.html')
@@ -159,7 +159,7 @@ class BlogCreateViewTestCase(TestCase):
     def test_blog_create_is_not_accessible_to(self, username, password):
         self.assertTrue(
             self.client.login(username=username, password=password))
-        target = reverse('blog_create')
+        target = reverse('blog:blog_create')
         response = self.client.get(target)
         self.assertNotEqual(response.status_code, 200)
         self.assertTemplateNotUsed(response, 'blog/blog_create_form.html')
@@ -177,9 +177,9 @@ class BlogCreateViewTestCase(TestCase):
             'is_public': True
         }
 
-        target = reverse('blog_create')
+        target = reverse('blog:blog_create')
         response = self.client.post(target, data)
-        self.assertRedirects(response, reverse('user_profile'),
+        self.assertRedirects(response, reverse('authapp:user_profile'),
                              target_status_code=302)
 
         self.assertTrue(Blog.objects.filter(author__username=username).exists())
@@ -198,7 +198,7 @@ class BlogUpdateViewTestCase(TestCase):
         self.assertTrue(
             self.client.login(username='user_with_blog',
                               password='user_with_blog@pw'))
-        target = reverse('blog_update')
+        target = reverse('blog:blog_update')
         response = self.client.get(target)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'blog/blog_update_form.html')
@@ -214,9 +214,9 @@ class BlogUpdateViewTestCase(TestCase):
             'is_public': True
         }
 
-        target = reverse('blog_update')
+        target = reverse('blog:blog_update')
         response = self.client.post(target, data)
-        self.assertRedirects(response, reverse('user_profile'),
+        self.assertRedirects(response, reverse('authapp:user_profile'),
                              target_status_code=302)
 
         updated_blog = Blog.objects.first()
@@ -236,7 +236,7 @@ class PostCreateViewTestCase(TestCase):
         self.assertTrue(
             self.client.login(username='user_with_blog',
                               password='user_with_blog@pw'))
-        target = reverse('post_create')
+        target = reverse('blog:post_create')
         response = self.client.get(target)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'blog/post_create_form.html')
@@ -254,9 +254,9 @@ class PostCreateViewTestCase(TestCase):
             'tags': [],
         }
 
-        target = reverse('post_create')
+        target = reverse('blog:post_create')
         response = self.client.post(target, data)
-        self.assertRedirects(response, reverse('user_posts'))
+        self.assertRedirects(response, reverse('blog:user_posts'))
 
         self.assertTrue(
             Post.objects.filter(author__username='user_with_blog').exists())
@@ -281,7 +281,7 @@ class PostUpdateViewTestCase(TestCase):
         self.assertTrue(
             self.client.login(username='user_with_blog',
                               password='user_with_blog@pw'))
-        target = reverse('post_update', args=[self.blog_post.slug])
+        target = reverse('blog:post_update', args=[self.blog_post.slug])
         response = self.client.get(target)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'blog/post_update_form.html')
@@ -299,9 +299,9 @@ class PostUpdateViewTestCase(TestCase):
             'tags': [],
         }
 
-        target = reverse('post_update', args=[self.blog_post.slug])
+        target = reverse('blog:post_update', args=[self.blog_post.slug])
         response = self.client.post(target, data)
-        self.assertRedirects(response, reverse('user_posts'))
+        self.assertRedirects(response, reverse('blog:user_posts'))
 
         updated_post = Post.objects.first()
         self.assertEqual(updated_post.title, data['title'])
@@ -325,7 +325,7 @@ class UserPostsListViewTestCase(TestCase):
         self.assertTrue(
             self.client.login(username='user_with_blog',
                               password='user_with_blog@pw'))
-        target = reverse('user_posts')
+        target = reverse('blog:user_posts')
         response = self.client.get(target)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'blog/user_posts.html')
@@ -362,7 +362,7 @@ class BlogCommentsViewTestCase(TestCase):
             self.client.login(username='user_with_blog',
                               password='user_with_blog@pw'))
 
-        target = reverse('blog_comments')
+        target = reverse('blog:blog_comments')
         response = self.client.get(target)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'blog/comments_list.html')

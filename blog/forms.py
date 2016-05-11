@@ -47,7 +47,7 @@ class TagCreateField(autocomplete.CreateModelMultipleField):
 class PostForm(forms.ModelForm):
     tags = TagCreateField(
         queryset=Tag.objects.all(),
-        widget=autocomplete.ModelSelect2Multiple(url='tag_autocomplete'),
+        widget=autocomplete.ModelSelect2Multiple(url='blog:tag_autocomplete'),
         required=False,
         )
 

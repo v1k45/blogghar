@@ -29,7 +29,7 @@ class UserProfile(models.Model):
         super(UserProfile, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        target = reverse('profile', args=[self.user.username])
+        target = reverse('authapp:profile', args=[self.user.username])
         return target
 
     def is_blogger(self):
