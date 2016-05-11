@@ -10,6 +10,7 @@ from dal import autocomplete
 from .models import Blog, Post, Tag
 from .forms import BlogForm, PostForm
 from .decorators import create_or_edit_blog, blogger_required
+from comments.models import Comment
 
 
 class BlogDetail(SingleObjectMixin, ListView):
@@ -173,3 +174,20 @@ class UserPostsList(ListView):
         return queryset
 
 user_posts = UserPostsList.as_view()
+
+
+class BlogComments(ListView):
+    model = Comment
+    template_name = 'blog/comments_list.html'
+    context_object_name = 'comments'
+
+    @method_decorator([login_required, blogger_required])
+    def dispatch(self, request, *args, **kwargs):
+        return super(BlogComments, self).dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        queryset = self.model.objects.select_related(
+            'post', 'post__blog').filter(post__blog=self.request.user.blog)
+        return queryset
+
+blog_comments = BlogComments.as_view()
