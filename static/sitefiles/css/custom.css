@@ -46,3 +46,8 @@ main {
 #profile-page-about {
     padding: 50px;
 }
+.header {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-top: 30px;
+}
