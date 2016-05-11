@@ -60,6 +60,7 @@ class PostForm(forms.ModelForm):
         super(PostForm, self).__init__(*args, **kwargs)
         self.fields['slug'].required = False
         self.fields['slug'].label = 'Slug (leave blank to auto-generate)'
+        self.fields['content'].label = ''
         # making forms crispy
         self.helper = FormHelper(self)
         self.helper.include_media = False
