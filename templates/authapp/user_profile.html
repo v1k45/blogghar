@@ -3,68 +3,8 @@
 {% block head_title %}{{ profile.user.username }}'s profile{% endblock %}
 {% block content %}
 
-<div id="profile-page-header" class="card" style="margin:0px">
-  <div class="card-image" style="overflow:hidden;">
-      <img class="" src="{% static 'images/user-profile-bg.jpg' %}" alt="user background">
-  </div>
-  <figure class="card-profile-image">
-      <img src="{% static 'images/user-profile-default.jpg' %}" alt="profile image" class="circle z-depth-2 responsive-img">
-  </figure>
-  <div class="card-content" id="profile-userdetails">
-    <div class="row">
-      <div class="col s3 offset-s2">
-          <h4 class="card-title grey-text text-darken-4">{{ profile.user.first_name }} {{ profile.user.last_name }}</h4>
-          <p class="medium-small grey-text">@{{ profile.user.username }}</p>
-      </div>
-      <div class="col s1 center-align">
-          <a href="#" title="Posts">
-          <h4 class="card-title grey-text text-darken-4">0</h4>
-          <p class="medium-small grey-text"><i class="material-icons">library_books</i></p>
-        </a>
-      </div>
-      <div class="col s1 center-align">
-        <a href="#" title="Comments">
-          <h4 class="card-title grey-text text-darken-4">0</h4>
-          <p class="medium-small grey-text"><i class="material-icons">comment</i></p>
-        </a>
-      </div>
-      <div class="col s1 center-align">
-        <a href="#" title="Likes">
-          <h4 class="card-title grey-text text-darken-4">0</h4>
-          <p class="medium-small grey-text"><i class="material-icons">thumb_up</i></p>
-        </a>
-      </div>
-      <div class="col s1 center-align">
-        <a href="#" title="User type">
-          <h4 class="card-title grey-text text-darken-4">
-            {% if profile.user.is_staff %}
-              Staff
-            {% else %}
-              {{ profile.get_user_type_display }}
-            {% endif %}
-          </h4>
-          <p class="medium-small grey-text">
-            <i class="material-icons">
-              {% if profile.user.is_staff %}
-                supervisor_account
-              {% elif profile.user_type == 'b' %}
-                mode_edit
-              {% else %}
-                library_books
-              {% endif %}
-            </i>
-          </p>
-        </a>
-      </div>
-      <div class="col s1 right-align" style="margin-top:-5px">
-        <a class="btn-floating waves-effect waves-light darken-2 right"
-            data-tooltip="Edit profile" href="/">
-            <i class="material-icons">mode_edit</i>
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
+  {% include "authapp/_user_profile_header.html" %}
+
 <div id="profile-page-about" class="center flow-text">
   <!-- start Profile About  -->
   <div class="card">
