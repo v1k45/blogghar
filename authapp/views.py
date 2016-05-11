@@ -35,10 +35,13 @@ class UserComments(SingleObjectMixin, ListView):
     def get(self, request, *args, **kwargs):
         self.object = self.get_object(
             queryset=self.model.objects.select_related(
-                'user', 'user__blog').prefetch_related(Prefetch(
-                    'user__comments',
-                    queryset=Comment.objects.select_related('post').filter(is_public=True)  # noqa
-                    ))
+                'user', 'user__blog').prefetch_related(
+                    Prefetch(
+                        'user__comments',
+                        queryset=Comment.objects.select_related(
+                            'post').filter(is_public=True)
+                    ),
+                    'user__posts')
             )
         return super(UserComments, self).get(request, *args, **kwargs)
 
