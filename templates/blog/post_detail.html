@@ -2,6 +2,7 @@
 {% load comments_tags %}
 {% load staticfiles %}
 {% load crispy_forms_tags %}
+{% load markdown_tags %}
 
 {% block head_title %}{{ post.title }} -- {{ post.blog.title }}{% endblock %}
 
@@ -17,8 +18,8 @@
         <span class="right">{{ post.created }}</span>
       </div>
       <div class="card-content">
-        <div class="post-content flow-text">
-          {{ post.content }}
+        <div class="post-content">
+          {% render_markdown post.content %}
         </div>
       </div>
     </div>
