@@ -57,6 +57,25 @@ class PostDetailView(DetailView):
 post_detail = PostDetailView.as_view()
 
 
+class TagggedPostsList(ListView):
+    model = Post
+    template_name = 'blog/tagged_posts_list.html'
+    context_object_name = 'posts'
+
+    def get_context_data(self, **kwargs):
+        context = super(TagggedPostsList, self).get_context_data(**kwargs)
+        context['tag'] = self.kwargs['tag']
+        return context
+
+    def get_queryset(self):
+        queryset = Post.objects.published().select_related(
+            'author', 'blog', 'author__profile').prefetch_related(
+                'tags').filter(tags__slug=self.kwargs['tag'])
+        return queryset
+
+tagged_posts_list = TagggedPostsList.as_view()
+
+
 class BlogModelMixin(object):
     model = Blog
     form_class = BlogForm
