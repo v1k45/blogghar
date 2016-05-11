@@ -1,4 +1,8 @@
 {% extends "base.html" %}
+{% load comments_tags %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
 {% block head_title %}{{ post.title }} -- {{ post.blog.title }}{% endblock %}
 
 {% block content %}
@@ -18,5 +22,54 @@
         </div>
       </div>
     </div>
+    <div class="card">
+      <div class="card-content" {% if user.is_authenticated %}style="height:280px;"{% endif %}>
+        <div class="card-title">Post a comment</div>
+        {% if user.is_authenticated %}
+          {% get_comment_form post as comment_form %}
+          {% crispy comment_form %}
+        {% else %}
+          <p>Only logged in users can comment on blog posts.
+            Click here to Login or Signup today if you don't have an account yet.</p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">Comments</span>
+        <ul class="user-comments">
+          {% get_comment_list post as post_comments %}
+        {% for comment in post_comments  %}
+            <li data-comment-id="{{ comment.id }}" class="c">
+              <a href="#c{{ comment.id }}"></a>
+              <div class="comment">
+                <p class="author-name">{{ comment.author.first_name }}</p>
+                <small>
+                  <em> on <a href="#" class="comment-datetime"
+                  data-datetime="{{ comment.created|date:"c" }}">{{ comment.created }}</a> said:
+                  </em>
+              </small>
+                <p class="comment-string">{{ comment.comment }}</p>
+              </div>
+            </li>
+        {% endfor %}
+      </ul>
+      </div>
+    </div>
   </div>
+{% endblock %}
+
+{% block extra_scripts %}
+  <script type="text/javascript" src="{% static 'js/comments.js' %}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.0/moment-timezone-with-data-2010-2020.min.js"></script>
+
+  <script type="text/javascript">
+      var $dt = $('.comment-datetime');
+      $.each($dt, function (i, datetime) {
+          $(this).html(moment($(this).attr('data-datetime')).format('LLL'));
+      });
+  </script>
+
 {% endblock %}
