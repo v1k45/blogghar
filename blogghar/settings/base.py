@@ -144,6 +144,8 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = ('bootstrap', 'uni_form',
 # template pack to use
 CRISPY_TEMPLATE_PACK = 'materialize_form'
 
+MARKDOWN_EXTENSIONS = ['markdown.extensions.extra']
+
 # Allauth and other authentication realted settings
 
 AUTHENTICATION_BACKENDS = (
