@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block head_title %}Comments on your blog{% endblock %}
+
+{% block content %}
+<ul>
+  {% for comment in comments %}
+    <li>{{ comment.comment }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}
