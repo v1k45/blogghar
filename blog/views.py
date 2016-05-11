@@ -42,9 +42,6 @@ class BlogDetail(SingleObjectMixin, ListView):
         return self.object.posts.published()
 
 
-blog_detail = BlogDetail.as_view()
-
-
 class PostDetailView(DetailView):
     model = Post
     template_name = 'blog/post_detail.html'
@@ -54,8 +51,6 @@ class PostDetailView(DetailView):
             'author', 'blog', 'author__profile').filter(
                 author__username=self.kwargs['username'])
         return queryset
-
-post_detail = PostDetailView.as_view()
 
 
 class TagggedPostsList(ListView):
@@ -73,8 +68,6 @@ class TagggedPostsList(ListView):
             'author', 'blog', 'author__profile').prefetch_related(
                 'tags').filter(tags__slug=self.kwargs['tag'])
         return queryset
-
-tagged_posts_list = TagggedPostsList.as_view()
 
 
 class BlogModelMixin(object):
@@ -173,8 +166,6 @@ class UserPostsList(ListView):
             'author', 'blog').prefetch_related('tags').filter(author=self.request.user)  # noqa
         return queryset
 
-user_posts = UserPostsList.as_view()
-
 
 class BlogComments(ListView):
     model = Comment
@@ -189,5 +180,3 @@ class BlogComments(ListView):
         queryset = self.model.objects.select_related(
             'post', 'post__blog').filter(post__blog=self.request.user.blog)
         return queryset
-
-blog_comments = BlogComments.as_view()
