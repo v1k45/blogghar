@@ -35,6 +35,19 @@
         $(".dropdown-button").dropdown();
       });
     </script>
+
+    <!-- alerts -->
+    {% if messages %}
+        <script type="text/javascript">
+            $(document).ready(function () {
+                {% for message in messages %}
+                    Materialize.toast('{{ message }}', 5000, '{{ message.tags }}');
+                {% endfor %}
+            });
+        </script>
+    {% endif %}
+    <!-- end alerts -->
+
     {# block to easily inject any javascript content #}
     {% block extra_scripts %}
     {% endblock %}
