@@ -1,9 +1,44 @@
 from django import forms
+from django.contrib.auth import get_user_model
 
 from allauth.account import forms as allauth_forms
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout
+from crispy_forms.layout import Layout, Field
 from crispy_forms.bootstrap import StrictButton
+
+from .models import UserProfile
+
+
+class UserForm(forms.ModelForm):
+    class Meta(object):
+        model = get_user_model()
+        fields = ['first_name', 'last_name']
+
+    def __init__(self, *args, **kwargs):
+        super(UserForm, self).__init__(*args, **kwargs)
+        self.fields['last_name'].required = False
+        self.fields['first_name'].required = True
+        self.helper = FormHelper(self)
+        self.helper.form_tag = False
+        self.helper.layout = Layout('first_name', 'last_name')
+
+
+class UserProfileForm(forms.ModelForm):
+
+    class Meta(object):
+        model = UserProfile
+        fields = ['about', 'avatar']
+
+    def __init__(self, *args, **kwargs):
+        super(UserProfileForm, self).__init__(*args, **kwargs)
+        self.fields['avatar'].required = False
+        self.fields['avatar'].label = ''
+        self.helper = FormHelper(self)
+        self.helper.form_tag = False
+        self.helper.layout = Layout(
+            Field('about', css_class='materialize-textarea'),
+            Field('avatar')
+        )
 
 
 class CustomLoginForm(allauth_forms.LoginForm):
