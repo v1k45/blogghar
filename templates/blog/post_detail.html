@@ -7,6 +7,17 @@
 {% block head_title %}{{ post.title }} -- {{ post.blog.title }}{% endblock %}
 
 {% block content %}
+  <nav class="blue accent-2 z-depth-0">
+    <div class="container">
+    <div class="nav-wrapper row">
+      <div class="col s12">
+        <a href="#!" class="breadcrumb">Home</a>
+        <a href="/@{{ post.author.username }}/blog/" class="breadcrumb">@{{ post.author.username }}</a>
+        <span class="breadcrumb">{{ post.title }}</span>
+      </div>
+    </div>
+    </div>
+  </nav>
   <div class="container">
     <div class="card">
       <div class="card-image">
