@@ -55,7 +55,7 @@
       {% if request.user.id == profile.user.id %}
         <div class="col s1 right-align" style="margin-top:-5px">
           <a class="btn-floating waves-effect waves-light darken-1 right"
-              data-tooltip="Edit profile" href="/">
+              data-tooltip="Edit profile" href="{% url 'user_profile_update' %}">
               <i class="material-icons">mode_edit</i>
           </a>
         </div>
