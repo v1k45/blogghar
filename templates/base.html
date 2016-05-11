@@ -24,6 +24,29 @@
       {% block content %}
       {% endblock %}
     </main>
+
+    {% if user.is_authenticated and user.profile.is_blogger %}
+      <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+        <a class="btn-floating btn-large red">
+          <i class="large material-icons">add</i>
+        </a>
+        <ul>
+          <li><a href="{% url 'blog_update' %}" class="btn-floating red tooltipped" data-position="left"
+                data-delay="50" data-tooltip="Update blog info">
+                <i class="material-icons">info</i></a></li>
+          <li><a href="{% url 'blog_comments' %}" class="btn-floating purpule tooltipped" data-position="left"
+                data-delay="50" data-tooltip="View blog comments">
+            <i class="material-icons">comment</i></a></li>
+          <li><a href="{% url 'user_posts' %}" class="btn-floating green tooltipped" data-position="left"
+                data-delay="50" data-tooltip="All blogposts">
+                <i class="material-icons">library_books</i></a></li>
+          <li><a href="{% url 'post_create' %}" class="btn-floating blue tooltipped" data-position="left"
+            data-delay="50" data-tooltip="Write a post">
+            <i class="material-icons">mode_edit</i></a></li>
+        </ul>
+      </div>
+    {% endif %}
+
     {# include footer #}
     {% include "_footer.html" %}
     <!-- start javascript inclusions -->
