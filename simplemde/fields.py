@@ -13,5 +13,4 @@ class SimpleMdeField(TextField):
     def formfield(self, **kwargs):
         defaults = {'widget': self.widget}
         defaults.update(kwargs)
-        defaults['label'] = ''
         return super(SimpleMdeField, self).formfield(**defaults)
