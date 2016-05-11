@@ -10,8 +10,8 @@
   <div class="card">
     <div class="card-content">
       <span class="card-title">About @{{ profile.user.username }}</span>
-      {% if profile.user.about %}
-        <p class="grey-text">{{ profile.user.about }}</p>
+      {% if profile.about %}
+        <p class="grey-text">{{ profile.about }}</p>
       {% else %}
       <p class="grey-text"><i>Apparently, this user prefers to keep an air of mystery about them</i>.</p>
       {% endif %}
