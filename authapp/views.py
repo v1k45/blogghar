@@ -1,15 +1,22 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.views.generic import DetailView
+
+from .models import UserProfile
 
 
-def user_profile(request, username):
-    # getting default user model
-    UserModel = get_user_model()
-    profile = get_object_or_404(
-        UserModel.objects.select_related(), username=username
-    ).profile
-    return render(request, 'authapp/user_profile.html', {'profile': profile})
+class UserProfile(DetailView):
+    template_name = 'authapp/user_profile.html'
+    model = UserProfile
+    context_object_name = 'profile'
+    slug_url_kwarg = 'username'
+    slug_field = 'user__username'
+
+    def get_queryset(self):
+        queryset = self.model.objects.select_related(
+            'user', 'user__blog').prefetch_related('user__posts')
+        return queryset
 
 
 @login_required
