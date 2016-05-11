@@ -1,3 +1,18 @@
+function toHTML(markdown) {
+    var rendered_html = null;
+    $.ajax({
+        url: '/simplemde/md2html/',
+        type: 'POST',
+        'async': false,
+        data: {content: markdown, csrfmiddlewaretoken: csrftoken},
+        success: function (response) {
+            rendered_html = response;
+        }
+    });
+
+    return rendered_html;
+}
+
 $('#imageUploadModal').on('click', '#imageUpload', function(){
     // when imageUpload button is clicked..
     var $img = $('#browseImage');
@@ -118,6 +133,14 @@ var simplemde = new SimpleMDE({
     'preview', 'side-by-side', 'fullscreen',
     '|',
     'guide'],
+
+    previewRender: function (plainText, preview) {
+        setTimeout(function () {
+            preview.innerHTML = toHTML(plainText);
+        }, 250);
+
+        return "Loading...";
+    },
 
     insertTexts: {
         image: ["![](", ")"]
