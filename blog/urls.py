@@ -3,6 +3,7 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
+    url(r'^$', views.HomeTemplateView.as_view(), name='home'),
     url(r'^@(?P<username>[\w-]+)/blog/$', views.BlogDetail.as_view(), name='user_blog'),  # noqa
     url(r'^@(?P<username>[\w-]+)/blog/(?P<slug>[\w-]+)/$',
         views.PostDetailView.as_view(), name='post_detail'),

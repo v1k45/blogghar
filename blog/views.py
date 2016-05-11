@@ -4,6 +4,7 @@ from django.views.generic.detail import SingleObjectMixin
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
+from django.db.models import Count
 
 from dal import autocomplete
 
@@ -181,4 +182,16 @@ class BlogComments(ListView):
     def get_queryset(self):
         queryset = self.model.objects.select_related(
             'post', 'post__blog').filter(post__blog=self.request.user.blog)
+        return queryset
+
+
+class HomeTemplateView(ListView):
+    template_name = 'blog/home.html'
+    model = Post
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        queryset = Post.objects.published().select_related(
+            'author', 'author__profile', 'blog').prefetch_related(
+                'tags').annotate(comment_count=Count('comments'))
         return queryset
