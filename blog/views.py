@@ -36,6 +36,8 @@ class BlogDetail(SingleObjectMixin, ListView):
         except Blog.DoesNotExist:
             context['has_blog'] = False
 
+        context['posts'] = self.get_queryset()
+
         return context
 
     def get_queryset(self):
@@ -104,7 +106,7 @@ blog_update = BlogUpdateView.as_view()
 class PostModelMixin(object):
     model = Post
     form_class = PostForm
-    success_url = '/blog-home/posts/'
+    success_url = '/posts/'
 
     @method_decorator([login_required, blogger_required])
     def dispatch(self, request, *args, **kwargs):
