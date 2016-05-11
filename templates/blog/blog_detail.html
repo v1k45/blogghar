@@ -20,7 +20,7 @@
                 <br/>You should give a try to it!</p>
             </div>
             <div class="card-action">
-              <a href="#">Start blogging!</a>
+              <a href="{% url 'blog_create' %}">Start blogging!</a>
             </div>
           {% else %}
             <div class="card-content">
@@ -28,7 +28,7 @@
               <p class="grey-text">You registered to blogghar as a reader, you can't have a blog.</p>
             </div>
             <div class="card-action">
-              <a href="#">Become a blogger.</a>
+              <a href="#">Contact the administrators.</a>
             </div>
           {% endif %}
           </div>
