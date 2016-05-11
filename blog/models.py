@@ -66,6 +66,12 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def is_published(self):
+        return self.status == 'p'
+
+    def is_draft(self):
+        return self.status == 'd'
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=30)
