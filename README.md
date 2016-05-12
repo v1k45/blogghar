@@ -7,21 +7,21 @@ This project is part of the internship assignment by qwikpik.
 
 1. Blog – A blog consists of text, images and other media objects and data which could be arranged as required.
 
-2.       Tags – Each blog will be having some tags associated with it. (e.g. Name of blog – Trip to paris; could have tags like Europe, France associated with it.) The tags could be added to multiple blogs and a blog could have multiple tags associated with it. User should be able to create, edit and delete the tags.
+2. Tags – Each blog will be having some tags associated with it. (e.g. Name of blog – Trip to paris; could have tags like Europe, France associated with it.) The tags could be added to multiple blogs and a blog could have multiple tags associated with it. User should be able to create, edit and delete the tags.
 
-3.       Users – There will be different sets of user having different permission, roles and actions, along with basic profile info about them.
+3. Users – There will be different sets of user having different permission, roles and actions, along with basic profile info about them.
 
-a.       Blogger –
+    1. Blogger –
 
-*         Blogger should able to add, create, edit and delete blogs.
+        * Blogger should able to add, create, edit and delete blogs.
 
-*        Add and arrange different text and media elements to the blog.
+        * Add and arrange different text and media elements to the blog.
 
-*         Associate tags with the blogs
+        * Associate tags with the blogs
 
-b.      Readers – Reader could login into the application. Read,and comment on the blog.
+    2. Readers – Reader could login into the application. Read,and comment on the blog.
 
-c.       Admin – Admin should be able to control and manage users, blogs, tags and display of blogs
+    3. Admin – Admin should be able to control and manage users, blogs, tags and display of blogs
 
 ## Features included in project:
 
@@ -58,6 +58,6 @@ Along with the editor, one major thing I decided to try was django's class based
 
 Using class-based-views was a really nice experience. It makes sure that your code is dry and saves you from repeating same things again and again.
 
-Ps: Screenshots are available in directory named `screenshots`.
+__PS__: Screenshots are available in directory named `screenshots`.
 
-Pps: This project was developed for demonstration purpose only. This may not be _production-ready_.
+__PPS__: This project was developed for demonstration purpose only. This may not be _production-ready_.
