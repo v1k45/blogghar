@@ -23,6 +23,5 @@ class Comment(models.Model):
         ordering = ('-created', )
 
     def get_absolute_url(self):
-        target = reverse_lazy('blog:post_detail',
-                              args=[self.author.username, self.slug])
-        return target + "#c%s" + str(self.pk)
+        target = self.post.get_absolute_url()
+        return target + "#c" + str(self.pk)
