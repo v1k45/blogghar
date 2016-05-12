@@ -200,5 +200,5 @@ class HomeTemplateView(ListView):
     def get_queryset(self):
         queryset = Post.objects.published().select_related(
             'author', 'author__profile', 'blog').prefetch_related(
-                'tags').annotate(comment_count=Count('comments'))
+                'tags').annotate(comment_count=Count('comments')).filter(blog__is_public=True)  # noqa
         return queryset
