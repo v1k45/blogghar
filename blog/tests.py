@@ -91,7 +91,7 @@ class PostDetailViewTestCase(TestCase):
 
     def test_post_detail_is_accessible(self):
         blog_post = Post(title='Sample post', content='Sample content',
-                         author=self.user_with_blog,
+                         author=self.user_with_blog, status='p',
                          blog=self.user_with_blog.blog)
         blog_post.save()
 
