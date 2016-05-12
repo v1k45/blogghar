@@ -11,8 +11,13 @@
     <div class="container">
     <div class="nav-wrapper row">
       <div class="col s12">
-        <a href="#!" class="breadcrumb">Home</a>
-        <a href="/@{{ post.author.username }}/blog/" class="breadcrumb">@{{ post.author.username }}</a>
+        <a href="/" class="breadcrumb">Home</a>
+        <a href="{{ post.author.profile.get_absolute_url }}" class="breadcrumb">
+          @{{ post.author.username }}
+        </a>
+        <a href="{{ post.blog.get_absolute_url }}" class="breadcrumb">
+          {{ post.blog.title }}
+        </a>
         <span class="breadcrumb">{{ post.title }}</span>
       </div>
     </div>

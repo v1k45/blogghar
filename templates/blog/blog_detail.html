@@ -44,6 +44,17 @@
         </div>
     {% endif %}
   {% else %}
+  <nav class="blue accent-2 z-depth-0">
+    <div class="container">
+    <div class="nav-wrapper row">
+      <div class="col s12">
+        <a href="/" class="breadcrumb">Home</a>
+        <a href="{{ blog.author.profile.get_absolute_url }}" class="breadcrumb">@{{ blog.author.username }}</a>
+        <span class="breadcrumb">{{ blog.title }}</span>
+      </div>
+    </div>
+    </div>
+  </nav>
   <div class="container">
     <h4 class="light" style="border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 30px;">
       {{ requested_user.blog.title }}
