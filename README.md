@@ -35,11 +35,11 @@ This project is part of the internship assignment by qwikpik.
 * Post create/delete ability
 * Post cover (fancy thing nowadays)
 * Tags with autocomplete.
-* Anyone can read posts (I thought it was to restrictive to let only readers to see posts.)
+* Anyone can read posts (I thought it was too restrictive to let only readers to see posts.)
 * User comments (accessible to only users)
 * Markdown rendered posts (using python-markdown)
 * WYSIYWG Markdown editor using SimpleMDE
-* Extended feature of Markdown editor to upload images
+* Extended feature of Markdown editor to support image uploads.
 * Material design.
 * Django Admin support.
 
@@ -48,15 +48,15 @@ This project is part of the internship assignment by qwikpik.
 * django-allauth
 * django-autocomplete-light (3.0.4)
 * django-crispy-forms
-* materializecss
+* MaterializeCSS
 
 ## Colophon
 
-I did many things for the first time in project. Tried Atom editor (I normally stick with subl/pycharm). It is a nice editor, has virtualenv support, nice linter and gutters and other awesome features. I really liked it.
+I did few things for the first time in project. Tried Atom editor (I normally like to stick with subl/pycharm). It is a nice editor, has virtualenv support, nice linter and gutters and other awesome features. I really liked it.
 
 Along with the editor, one major thing I decided to try was django's class based views. I used to stay away from it and stick to fbvs, this is why I decided to write this project using class based views (because where is the fun in doing same thing again and again).
 
-Using class-based-views was a really nice experience. It makes sure that your code is dry and saves you from repeating same things again and again.
+Using class-based-views was a really nice experience. It makes sure that your code is DRY and saves you from repeating same things again and again.
 
 __PS__: Screenshots are available in directory named `screenshots`.
 
