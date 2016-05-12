@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
-from django.views.generic import ListView, CreateView, UpdateView, DetailView, DeleteView
+from django.views.generic import (ListView, CreateView, UpdateView,
+                                  DetailView, DeleteView)
 from django.views.generic.detail import SingleObjectMixin
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -43,7 +44,7 @@ class BlogDetail(SingleObjectMixin, ListView):
         return context
 
     def get_queryset(self):
-        return self.object.posts.published().annotate(comment_count=Count('comments'))
+        return self.object.posts.published().annotate(comment_count=Count('comments'))   # noqa
 
 
 class PostDetailView(DetailView):
