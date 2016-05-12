@@ -51,7 +51,7 @@ class PostDetailView(DetailView):
     template_name = 'blog/post_detail.html'
 
     def get_queryset(self):
-        queryset = Post.objects.select_related(
+        queryset = Post.objects.published().select_related(
             'author', 'blog', 'author__profile').filter(
                 author__username=self.kwargs['username'])
         return queryset
