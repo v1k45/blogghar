@@ -5,6 +5,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.db.models import Count
+from django.core.urlresolvers import reverse_lazy
 
 from dal import autocomplete
 
@@ -89,14 +90,14 @@ class BlogModelMixin(object):
 
 class BlogCreateView(BlogModelMixin, CreateView):
     template_name_suffix = '_create_form'
-    success_url = '/accounts/profile/'
+    success_url = reverse_lazy('authapp:user_profile')
 
 blog_create = BlogCreateView.as_view()
 
 
 class BlogUpdateView(BlogModelMixin, UpdateView):
     template_name_suffix = '_update_form'
-    success_url = '/accounts/profile/'
+    success_url = reverse_lazy('authapp:user_profile')
 
     def get_object(self, queryset=None):
         return self.request.user.blog
@@ -107,7 +108,7 @@ blog_update = BlogUpdateView.as_view()
 class PostModelMixin(object):
     model = Post
     form_class = PostForm
-    success_url = '/posts/'
+    success_url = reverse_lazy('blog:user_posts')
 
     @method_decorator([login_required, blogger_required])
     def dispatch(self, request, *args, **kwargs):
