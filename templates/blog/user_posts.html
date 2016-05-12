@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% block head_title %}Your posts{% endblock %}
 
 {% block content %}
@@ -18,8 +19,12 @@
         <div class="col s12 m8">
           <div class="card">
             <div class="card-image">
-              <img src="https://getmdl.io/templates/blog/images/road_big.jpg">
-              <a href="{% url 'blog:post_detail' user.username post.slug %}">
+              {% if post.cover %}
+                <img src="{{ post.cover.url }}">
+              {% else %}
+                <img src="{% static 'images/post-header.jpg' %}">
+              {% endif %}
+                <a href="{% url 'blog:post_detail' user.username post.slug %}">
                 <span title="{{ post.title }}" class="card-title truncate" style="width: 100%; background: rgba(0,0,0,.3);">{{ post.title }}</span></a>
             </div>
             <div class="card-content">

@@ -4,7 +4,13 @@
       <img class="" src="{% static 'images/user-profile-bg.jpg' %}" alt="user background">
   </div>
   <figure class="card-profile-image">
-      <img src="{% static 'images/user-profile-default.jpg' %}" alt="profile image" class="circle z-depth-2 responsive-img">
+      <img
+      {% if profile.avatar %}
+      src="{{ profile.avatar.url }}"
+      {% else %}
+      src="{% static 'images/user-profile-default.jpg' %}"
+      {% endif %}
+      alt="profile image" class="circle z-depth-2 responsive-img">
   </figure>
   <div class="card-content" id="profile-userdetails">
     <div class="row">

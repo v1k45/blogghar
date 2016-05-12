@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <div class="row">
   {% for post in posts %}
     <div class="col hide-on-med-and-down m4">
@@ -32,8 +33,12 @@
     <div class="col s12 m8">
       <div class="card">
         <div class="card-image">
-          <img src="https://getmdl.io/templates/blog/images/road_big.jpg">
-          <a href="{{ post.get_absolute_url }}">
+          {% if post.cover %}
+            <img src="{{ post.cover.url }}">
+          {% else %}
+            <img src="{% static 'images/post-header.jpg' %}">
+          {% endif %}
+            <a href="{{ post.get_absolute_url }}">
             <span title="{{ post.title }}" class="card-title truncate"
             style="width: 100%; background: rgba(0,0,0,.3);">
               {{ post.title }}
