@@ -53,13 +53,14 @@ class PostForm(forms.ModelForm):
 
     class Meta(object):
         model = Post
-        fields = ['title', 'slug', 'content', 'summary', 'tags']
+        fields = ['title', 'slug', 'cover', 'content', 'summary', 'tags']
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
         super(PostForm, self).__init__(*args, **kwargs)
         self.fields['slug'].required = False
         self.fields['slug'].label = 'Slug (leave blank to auto-generate)'
+        self.fields['cover'].label = 'Post cover (optional)'
         self.fields['content'].label = ''
         # making forms crispy
         self.helper = FormHelper(self)

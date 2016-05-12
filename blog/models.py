@@ -57,6 +57,8 @@ class Post(models.Model):
     slug = AutoSlugField(populate_from='title', unique_with=['blog'],
                          editable=True)
 
+    cover = models.ImageField(blank=True, upload_to='uploads/%Y/%m/%d/')
+
     tags = models.ManyToManyField('Tag', related_name='posts', blank=True)
 
     created = models.DateTimeField(auto_now_add=True)
