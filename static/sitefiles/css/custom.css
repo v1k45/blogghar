@@ -18,6 +18,10 @@ main {
     margin: 100px;
 }
 
+.post_detail a:hover {
+    text-decoration: underline;
+}
+
 /*----------------------------------------
     Profile Page
 ------------------------------------------*/
