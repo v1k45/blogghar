@@ -9,7 +9,7 @@
     {% for comment in comments %}
       <div class="card">
         <div class="card-content">
-          <a href="#">
+          <a href="{{ comment.post.get_absolute_url }}">
             <span title="{{ post.title }}" class="card-title truncate">
               {{ comment.post.title }}
             </span>
@@ -17,7 +17,7 @@
           <p>{{ comment.comment }}</p>
         </div>
         <div class="card-action">
-          <a href="#">Read More</a>
+          <a href="{{ comment.get_absolute_url }}">View on posts page.</a>
         </div>
       </div>
     {% endfor %}
