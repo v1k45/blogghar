@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block head_title %}
-  {% if not has_blog %}
+  {% if not has_blog or not requested_user.blog.is_public %}
     No blog found
   {% else %}
     {{ requested_user.blog.title }} -- @{{ requested_user.username }}'s Blog
@@ -43,70 +43,79 @@
           </div>
         </div>
     {% endif %}
+  {% elif not requested_user.blog.is_public %}
+    <div id="no-blog-card" class="center flow-text">
+      <div class="card">
+          <div class="card-content">
+            <span class="card-title">This blog is not publicly accessbile.</span>
+            <p class="grey-text">This user doesn't want anyone to read his blog (strange, isn't it?).</p>
+          </div>
+        </div>
+    </div>
   {% else %}
-  <nav class="blue accent-2 z-depth-0">
+    <nav class="blue accent-2 z-depth-0">
+      <div class="container">
+      <div class="nav-wrapper row">
+        <div class="col s12">
+          <a href="/" class="breadcrumb">Home</a>
+          <a href="{{ blog.author.profile.get_absolute_url }}" class="breadcrumb">@{{ blog.author.username }}</a>
+          <span class="breadcrumb">{{ blog.title }}</span>
+        </div>
+      </div>
+      </div>
+    </nav>
     <div class="container">
-    <div class="nav-wrapper row">
-      <div class="col s12">
-        <a href="/" class="breadcrumb">Home</a>
-        <a href="{{ blog.author.profile.get_absolute_url }}" class="breadcrumb">@{{ blog.author.username }}</a>
-        <span class="breadcrumb">{{ blog.title }}</span>
+      <h4 class="light" style="border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 30px;">
+        {{ requested_user.blog.title }}
+      </h4>
+      <p class="grey-text" style="font-size: 1.2em;">{{ requested_user.blog.tag_line }}</p>
+      <div class="row">
+        {% for post in posts %}
+          <div class="col hide-on-med-and-down m4">
+            <div class="post_detail" style="margin: 0px 10px; padding-right: 10px; border-right: 1px solid #dcdcdc">
+
+              <p class="grey-text">
+                <i class="material-icons left">mode_edit</i>
+                <a href="{{ post.author.profile.get_absolute_url }}" class="grey-text">
+                  @{{ post.author.username }}
+                </a>
+              </p>
+
+              <p class="grey-text">
+                <i class="material-icons left">access_time</i>
+                {{ post.created }}
+              </p>
+
+              <p class="grey-text"><i class="material-icons left">local_offer</i>
+                {% for tag in post.tags.all %}
+                <a href="{{ tag.get_absolute_url }}" class="grey-text">
+                  {{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+              </p>
+
+            </div>
+          </div>
+          <div class="col s12 m8">
+            <div class="card">
+              <div class="card-image">
+                <img src="https://getmdl.io/templates/blog/images/road_big.jpg">
+                <a href="{{ post.get_absolute_url }}">
+                  <span title="{{ post.title }}" class="card-title truncate"
+                  style="width: 100%; background: rgba(0,0,0,.3);">
+                    {{ post.title }}
+                  </span>
+                </a>
+              </div>
+              <div class="card-content">
+                <p>{{ post.summary }}</p>
+              </div>
+              <div class="card-action">
+                <a href="{{ post.get_absolute_url }}">Read More</a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
       </div>
     </div>
-    </div>
-  </nav>
-  <div class="container">
-    <h4 class="light" style="border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 30px;">
-      {{ requested_user.blog.title }}
-    </h4>
-    <p class="grey-text" style="font-size: 1.2em;">{{ requested_user.blog.tag_line }}</p>
-    <div class="row">
-      {% for post in posts %}
-        <div class="col hide-on-med-and-down m4">
-          <div class="post_detail" style="margin: 0px 10px; padding-right: 10px; border-right: 1px solid #dcdcdc">
-
-            <p class="grey-text">
-              <i class="material-icons left">mode_edit</i>
-              <a href="{{ post.author.profile.get_absolute_url }}" class="grey-text">
-                @{{ post.author.username }}
-              </a>
-            </p>
-
-            <p class="grey-text">
-              <i class="material-icons left">access_time</i>
-              {{ post.created }}
-            </p>
-
-            <p class="grey-text"><i class="material-icons left">local_offer</i>
-              {% for tag in post.tags.all %}
-              <a href="{{ tag.get_absolute_url }}" class="grey-text">
-                {{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
-              {% endfor %}
-            </p>
-
-          </div>
-        </div>
-        <div class="col s12 m8">
-          <div class="card">
-            <div class="card-image">
-              <img src="https://getmdl.io/templates/blog/images/road_big.jpg">
-              <a href="{{ post.get_absolute_url }}">
-                <span title="{{ post.title }}" class="card-title truncate"
-                style="width: 100%; background: rgba(0,0,0,.3);">
-                  {{ post.title }}
-                </span>
-              </a>
-            </div>
-            <div class="card-content">
-              <p>{{ post.summary }}</p>
-            </div>
-            <div class="card-action">
-              <a href="{{ post.get_absolute_url }}">Read More</a>
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-    </div>
-  </div>
-{% endif %}
+  {% endif %}
 {% endblock %}
