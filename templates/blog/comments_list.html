@@ -2,9 +2,24 @@
 {% block head_title %}Comments on your blog{% endblock %}
 
 {% block content %}
-<ul>
+<div class="container">
+  <h4 class="light header">Comments</h4>
   {% for comment in comments %}
-    <li>{{ comment.comment }}</li>
+    <div class="card">
+      <div class="card-content">
+        <a href="{{ comment.post.get_absolute_url }}">
+          <span title="{{ post.title }}" class="card-title truncate">
+            {{ comment.post.title }}
+          </span>
+        </a>
+        <p>{{ comment.comment }}</p>
+      </div>
+      <div class="card-action">
+        <a href="{{ comment.get_absolute_url }}">View on post page</a>
+      </div>
+    </div>
+  {% empty %}
+    <p class="grey-text">No comments.</p>
   {% endfor %}
-</ul>
+</div>
 {% endblock %}
