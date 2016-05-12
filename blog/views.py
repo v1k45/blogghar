@@ -4,7 +4,7 @@ from django.views.generic.detail import SingleObjectMixin
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
-from django.db.models import Count
+from django.db.models import Count, Prefetch
 from django.core.urlresolvers import reverse_lazy
 
 from dal import autocomplete
@@ -52,7 +52,12 @@ class PostDetailView(DetailView):
 
     def get_queryset(self):
         queryset = Post.objects.published().select_related(
-            'author', 'blog', 'author__profile').filter(
+            'author', 'blog', 'author__profile').prefetch_related(
+                Prefetch('comments',
+                         queryset=Comment.objects.select_related(
+                             'author', 'author__profile',
+                             'post', 'post__author').filter(is_public=True))
+            ).filter(
                 author__username=self.kwargs['username'])
         return queryset
 
