@@ -72,6 +72,9 @@ class Post(models.Model):
     def is_draft(self):
         return self.status == 'd'
 
+    class Meta(object):
+        ordering = ('-created', )
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=30)
