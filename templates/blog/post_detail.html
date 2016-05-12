@@ -56,6 +56,14 @@
       </div>
     </div>
     <div class="card">
+      <div class="card-content">
+        <div class="card-title">Tags</div>
+        {% for tag in post.tags.all %}
+        <a href="{{ tag.get_absolute_url }}" class="btn small grey">{{ tag.name }}</a>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="card">
       <div class="card-content" {% if user.is_authenticated %}style="height:280px;"{% endif %}>
         <div class="card-title">Post a comment</div>
         {% if user.is_authenticated %}
