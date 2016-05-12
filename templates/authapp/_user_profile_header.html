@@ -25,12 +25,6 @@
         </a>
       </div>
       <div class="col s1 center-align">
-        <a href="#" title="Likes">
-          <h4 class="card-title grey-text text-darken-4">0</h4>
-          <p class="medium-small grey-text"><i class="material-icons">thumb_up</i></p>
-        </a>
-      </div>
-      <div class="col s1 center-align">
         <a href="{% url 'blog:user_blog' profile.user.username %}" title="User type">
           <h4 class="card-title grey-text text-darken-4">
             {% if profile.user.is_staff %}
