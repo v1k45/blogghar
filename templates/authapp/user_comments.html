@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block head_title %}{{ profile.user.username }}'s comments{% endblock %}
+{% block content %}
+
+  {% include "authapp/_user_profile_header.html" %}
+  <div class="container">
+    <h4 class="light header">Comments</h4>
+    {% for comment in comments %}
+      <div class="card">
+        <div class="card-content">
+          <a href="#">
+            <span title="{{ post.title }}" class="card-title truncate">
+              {{ comment.post.title }}
+            </span>
+          </a>
+          <p>{{ comment.comment }}</p>
+        </div>
+        <div class="card-action">
+          <a href="#">Read More</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

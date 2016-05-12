@@ -30,7 +30,7 @@ def profile_redirector(request):
 
 
 class UserComments(SingleObjectMixin, ListView):
-    template_name = 'authapp/user_profile.html'
+    template_name = 'authapp/user_comments.html'
     model = UserProfile
     slug_url_kwarg = 'username'
     slug_field = 'user__username'
@@ -51,10 +51,12 @@ class UserComments(SingleObjectMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(UserComments, self).get_context_data(**kwargs)
         context['profile'] = self.object
+        context['comments'] = self.get_queryset()
         return context
 
     def get_queryset(self):
-        return self.object.user.comments.all()
+        qs = self.object.user.comments.all()
+        return qs
 
 
 class UserProfileUpdateView(UpdateView):
