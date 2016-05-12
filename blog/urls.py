@@ -19,6 +19,7 @@ urlpatterns = [
 
     url(r'^write/$', views.PostCreateView.as_view(), name='post_create'),
     url(r'^update/(?P<slug>[\w-]+)/$', views.PostUpdateView.as_view(), name='post_update'),  # noqa
+    url(r'^delete/(?P<slug>[\w-]+)/$', views.PostDeleteView.as_view(), name='post_delete'),  # noqa
 
     url(r'^posts/$', views.UserPostsList.as_view(), name='user_posts'),
 ]

@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.views.generic import ListView, CreateView, UpdateView, DetailView
+from django.views.generic import ListView, CreateView, UpdateView, DetailView, DeleteView
 from django.views.generic.detail import SingleObjectMixin
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -99,8 +99,6 @@ class BlogCreateView(BlogModelMixin, CreateView):
     template_name_suffix = '_create_form'
     success_url = reverse_lazy('authapp:user_profile')
 
-blog_create = BlogCreateView.as_view()
-
 
 class BlogUpdateView(BlogModelMixin, UpdateView):
     template_name_suffix = '_update_form'
@@ -108,8 +106,6 @@ class BlogUpdateView(BlogModelMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user.blog
-
-blog_update = BlogUpdateView.as_view()
 
 
 class PostModelMixin(object):
@@ -135,8 +131,6 @@ class PostModelMixin(object):
 class PostCreateView(PostModelMixin, CreateView):
     template_name_suffix = '_create_form'
 
-post_create = PostCreateView.as_view()
-
 
 class PostUpdateView(PostModelMixin, UpdateView):
     template_name_suffix = '_update_form'
@@ -144,7 +138,19 @@ class PostUpdateView(PostModelMixin, UpdateView):
     def get_queryset(self):
         return self.request.user.posts.all()
 
-post_update = PostUpdateView.as_view()
+
+class PostDeleteView(DeleteView):
+    model = Post
+    success_url = reverse_lazy('blog:user_posts')
+    template_name_suffix = '_delete_form'
+
+    @method_decorator([login_required, blogger_required])
+    def dispatch(self, request, *args, **kwargs):
+        return super(PostDeleteView, self).dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        qs = self.request.user.posts.all()
+        return qs
 
 
 class TagAutoComplete(autocomplete.Select2QuerySetView):
