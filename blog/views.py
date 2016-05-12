@@ -43,7 +43,7 @@ class BlogDetail(SingleObjectMixin, ListView):
         return context
 
     def get_queryset(self):
-        return self.object.posts.published()
+        return self.object.posts.published().annotate(comment_count=Count('comments'))
 
 
 class PostDetailView(DetailView):
@@ -75,8 +75,9 @@ class TagggedPostsList(ListView):
     def get_queryset(self):
         queryset = Post.objects.published().select_related(
             'author', 'blog', 'author__profile').prefetch_related(
-                'tags').filter(tags__slug=self.kwargs['tag'],
-                               blog__is_public=True)
+                'tags').annotate(
+                    comment_count=Count('comments')).filter(
+                        tags__slug=self.kwargs['tag'], blog__is_public=True)
         return queryset
 
 
