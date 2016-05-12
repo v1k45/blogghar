@@ -6,16 +6,7 @@ $(function () {
         if ($comment_val.length) {
 
             var $form = $('#postcomment');
-
-            var template = "" +
-                "<li data-comment-id=\"{{id}}\" class=\"c\">" +
-                "<a name=\"c{{ id }}\"></a>" +
-                "<div class=\"comment\">" +
-                "<p class=\"author-name\">{{ name }}</p>" +
-                "<small><em> on <a class='comment-datetime'>{{ created }}</a> said:</em></small>" +
-                "<p class=\"comment-string\">{{ comment }}</p>" +
-                "</div></li>";
-
+            template = $('#comment-item').html();
             console.log($form);
 
             $.ajax({
@@ -29,11 +20,11 @@ $(function () {
                         var rendered_html = Mustache.render(template, ajax_data.data);
 
                         var $comment_list = $('.user-comments');
-                        $comment_list.append(rendered_html);
+                        $comment_list.prepend(rendered_html);
 
                         var tdl = $('li.c[data-comment-id=' + ajax_data.data.id + '] a.comment-datetime');
                         tdl.html(moment(ajax_data.data.created).format('LLL'));
-                        tdl.attr('href', '/comments/redirect/' + ajax_data.data.id);
+                        tdl.attr('href', '#' + ajax_data.data.id);
                         var t = $('li.c[data-comment-id=' + ajax_data.data.id + ']');
                         if (t.length) {
                             event.preventDefault();

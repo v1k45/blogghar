@@ -46,28 +46,34 @@
         {% endif %}
       </div>
     </div>
-    <div class="card">
-      <div class="card-content">
-        <span class="card-title">Comments</span>
-        <ul class="user-comments">
-          {% get_comment_list post as post_comments %}
-        {% for comment in post_comments  %}
-            <li data-comment-id="{{ comment.id }}" class="c">
-              <a href="#c{{ comment.id }}"></a>
-              <div class="comment">
-                <p class="author-name">{{ comment.author.first_name }}</p>
-                <small>
-                  <em> on <a href="#" class="comment-datetime"
-                  data-datetime="{{ comment.created|date:"c" }}">{{ comment.created }}</a> said:
-                  </em>
-              </small>
-                <p class="comment-string">{{ comment.comment }}</p>
-              </div>
-            </li>
+    <h4 class="light header">Comments</h4>
+    {% get_comment_list post as post_comments %}
+      <ul class="user-comments">
+        {% for comment in post_comments %}
+        <li data-comment-id="{{ comment.id }}" class="c" id="c{{ comment.id }}">
+          <div class="card">
+            <div class="card-content">
+              <a href="{{ comment.author.profile.get_absolute_url }}">
+                <span title="{{ comment.author.first_name }}" class="card-title truncate">
+                  {{ comment.author.first_name }}
+                </span>
+              </a>
+              <p>{{ comment.comment }}</p>
+            </div>
+            <div class="card-panel">
+              <i class="material-icons left">access_time</i>
+              <a href="#c{{ comment.id }}" class="comment-datetime"
+              data-datetime="{{ comment.created|date:"c" }}">{{ comment.created }}</a>
+            </div>
+          </div>
+        </li>
+        {% empty %}
+          <p class="grey-text no-comment-string">No comments.</p>
         {% endfor %}
-      </ul>
-      </div>
-    </div>
+    </ul>
+  <!--
+
+  -->
   </div>
 {% endblock %}
 
@@ -76,6 +82,27 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.0/moment-timezone-with-data-2010-2020.min.js"></script>
+
+{% verbatim %}
+  <script type="text/html" id="comment-item">
+    <li data-comment-id="{{ id }}" class="c" id="c{{ id }}">
+      <div class="card">
+        <div class="card-content">
+          <a href="{{ link }}">
+            <span title="{{ name }}" class="card-title truncate">
+              {{ name}}
+            </span>
+          </a>
+          <p>{{ comment }}</p>
+        </div>
+        <div class="card-panel">
+          <i class="material-icons left">access_time</i>
+          <a href="#c{{ id }}" class="comment-datetime">{{ created }}</a>
+        </div>
+      </div>
+    </li>
+  </script>
+{% endverbatim %}
 
   <script type="text/javascript">
       var $dt = $('.comment-datetime');
