@@ -25,53 +25,6 @@
     Latest
   </h4>
   <p class="grey-text" style="font-size: 1.2em;">Recent stories from @{{ profile.user.username }}</p>
-  <div class="row">
-    {% latest_post profile.user as posts %}
-    {% for post in posts %}
-      <div class="col hide-on-med-and-down m4">
-        <div class="post_detail" style="margin: 0px 10px; padding-right: 10px; border-right: 1px solid #dcdcdc">
-
-          <p class="grey-text">
-            <i class="material-icons left">mode_edit</i>
-            <a href="{{ post.author.profile.get_absolute_url }}" class="grey-text">
-              @{{ post.author.username }}
-            </a>
-          </p>
-
-          <p class="grey-text">
-            <i class="material-icons left">access_time</i>
-            {{ post.created }}
-          </p>
-
-          <p class="grey-text"><i class="material-icons left">local_offer</i>
-            {% for tag in post.tags.all %}
-            <a href="{{ tag.get_absolute_url }}" class="grey-text">
-              {{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
-            {% endfor %}
-          </p>
-
-        </div>
-      </div>
-      <div class="col s12 m8">
-        <div class="card">
-          <div class="card-image">
-            <img src="https://getmdl.io/templates/blog/images/road_big.jpg">
-            <a href="{{ post.get_absolute_url }}">
-              <span title="{{ post.title }}" class="card-title truncate"
-              style="width: 100%; background: rgba(0,0,0,.3);">
-                {{ post.title }}
-              </span>
-            </a>
-          </div>
-          <div class="card-content">
-            <p>{{ post.summary }}</p>
-          </div>
-          <div class="card-action">
-            <a href="{{ post.get_absolute_url }}">Read More</a>
-          </div>
-        </div>
-      </div>
-      {% endfor %}
-  </div>
-
+  {% latest_post profile.user as posts %}
+  {% include "blog/_post_list.html" %}
 {% endblock %}
