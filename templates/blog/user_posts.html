@@ -27,10 +27,13 @@
             </div>
             <div class="card-action">
               <a href="{% url 'blog:post_update' post.slug %}">Edit</a>
+              <a href="{% url 'blog:post_delete' post.slug %}">Delete</a>
             </div>
           </div>
         </div>
-        {% endfor %}
+      {% empty %}
+        <p class="grey-text">No posts found</a>
+      {% endfor %}
       </div>
     </div>
 {% endblock %}
