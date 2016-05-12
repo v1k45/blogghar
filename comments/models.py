@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.core.urlresolvers import reverse_lazy
 
 from blog.models import Post
 
@@ -20,3 +21,8 @@ class Comment(models.Model):
 
     class Meta(object):
         ordering = ('-created', )
+
+    def get_absolute_url(self):
+        target = reverse_lazy('blog:post_detail',
+                              args=[self.author.username, self.slug])
+        return target + "#c%s" + str(self.pk)

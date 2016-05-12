@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf import settings
+from django.core.urlresolvers import reverse_lazy
+
 from autoslug import AutoSlugField
 from simplemde.fields import SimpleMdeField
 
@@ -21,6 +23,10 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        target = reverse_lazy('blog:user_blog', args=[self.author.username])
+        return target
 
 
 class PostQueryset(models.QuerySet):
@@ -72,6 +78,11 @@ class Post(models.Model):
     def is_draft(self):
         return self.status == 'd'
 
+    def get_absolute_url(self):
+        target = reverse_lazy('blog:post_detail',
+                              args=[self.author.username, self.slug])
+        return target
+
     class Meta(object):
         ordering = ('-created', )
 
@@ -82,3 +93,7 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        target = reverse_lazy('blog:tagged_posts_list', args=[self.slug])
+        return target
